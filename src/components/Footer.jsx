@@ -46,21 +46,21 @@ const Footer = () => {
             <p className="text-gray-600 mb-6">AI-powered IT Helpdesk Agent</p>
             <div className="flex space-x-4">
               <a
-                href="#"
+                href="https://twitter.com"
                 className="text-gray-500 hover:text-primary-600 transition-colors"
                 aria-label="Twitter"
               >
                 <FiTwitter size={20} />
               </a>
               <a
-                href="#"
+                href="https://linkedin.com"
                 className="text-gray-500 hover:text-primary-600 transition-colors"
                 aria-label="LinkedIn"
               >
                 <FiLinkedin size={20} />
               </a>
               <a
-                href="#"
+                href="https://github.com"
                 className="text-gray-500 hover:text-primary-600 transition-colors"
                 aria-label="GitHub"
               >
