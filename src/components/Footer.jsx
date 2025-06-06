@@ -108,24 +108,24 @@ const Footer = () => {
             © {new Date().getFullYear()} ResolveMeQ. All rights reserved.
           </p>
           <div className="flex space-x-6">
-            <a
-              href="#"
+            <button
+              type="button"
               className="text-gray-500 hover:text-primary-600 transition-colors"
             >
               Privacy Policy
-            </a>
-            <a
-              href="#"
+            </button>
+            <button
+              type="button"
               className="text-gray-500 hover:text-primary-600 transition-colors"
             >
               Terms of Service
-            </a>
-            <a
-              href="#"
+            </button>
+            <button
+              type="button"
               className="text-gray-500 hover:text-primary-600 transition-colors"
             >
               Cookie Policy
-            </a>
+            </button>
           </div>
         </motion.div>
       </div>
