@@ -3,11 +3,124 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Optional custom styles */
-body {
-  @apply bg-gray-50 text-gray-900 antialiased;
+@layer base {
+  :root {
+    /* Modern Color Palette */
+    --primary: 79 70 229;    /* Indigo */
+    --primary-dark: 67 56 202;
+    --secondary: 236 72 153; /* Pink */
+    --accent: 16 185 129;    /* Emerald */
+    --background: 249 250 251;
+    --foreground: 17 24 39;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, rgb(var(--primary)) 0%, rgb(var(--secondary)) 100%);
+    --gradient-dark: linear-gradient(135deg, rgb(17, 24, 39) 0%, rgb(88, 28, 135) 100%);
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    
+    /* Glassmorphism */
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  }
+
+  .dark {
+    --background: 17 24 39;
+    --foreground: 249 250 251;
+    --glass-bg: rgba(17, 24, 39, 0.7);
+  }
+
+  body {
+    @apply bg-[rgb(var(--background))] text-[rgb(var(--foreground))] antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
 }
 
+@layer components {
+  .glass-card {
+    @apply backdrop-blur-lg bg-opacity-70 border border-opacity-20 shadow-lg;
+    background: var(--glass-bg);
+    border-color: var(--glass-border);
+    box-shadow: var(--glass-shadow);
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-primary);
+  }
+
+  .btn-primary {
+    @apply px-6 py-3 rounded-lg font-medium transition-all duration-300 
+           bg-gradient-to-r from-indigo-600 to-pink-500 
+           hover:from-indigo-700 hover:to-pink-600 
+           text-white shadow-lg hover:shadow-xl 
+           transform hover:-translate-y-0.5;
+  }
+
+  .section-padding {
+    @apply py-20 md:py-32;
+  }
+
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
+
+/* Modern Animations */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(var(--background));
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--primary));
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--primary-dark));
+}
+
+/* Base transitions */
+.transition-base {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+/* Focus styles */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-[rgb(var(--primary))] focus:ring-offset-2;
+}
+
+/* Selection styles */
+::selection {
+  @apply bg-[rgb(var(--primary))] bg-opacity-20 text-[rgb(var(--primary-dark))];
+}
+
+/* Optional custom styles */
 html {
   scroll-behavior: smooth;
 }

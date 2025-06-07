@@ -1,3 +1,10 @@
 # https://www.robotstxt.org/robotstxt.html
+# Allow all crawlers
 User-agent: *
-Disallow:
+Allow: /
+
+# Sitemap location
+Sitemap: https://resolvemeq.com/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 10

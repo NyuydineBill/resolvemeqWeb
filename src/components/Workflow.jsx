@@ -1,96 +1,168 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { useState } from "react";
+import {
+  FiMessageSquare,
+  FiSearch,
+  FiCheckCircle,
+  FiChevronDown,
+  FiCheck,
+  FiClock,
+  FiUsers,
+} from "react-icons/fi";
 
 const steps = [
   {
     id: 1,
-    title: "User Request",
-    description: "Employee reports issue via chat/voice interface",
-    icon: "💬",
+    title: "Submit Your Issue",
+    description: "Describe your IT problem through chat or voice interface.",
+    longDescription: "Start by describing your IT issue through our intuitive chat interface or voice command system. Our AI understands natural language and can handle multiple issues simultaneously.",
+    icon: () => <FiMessageSquare className="w-8 h-8" />,
+    stats: "2 min average submission",
+    color: "text-primary-600",
   },
   {
     id: 2,
-    title: "Intent Recognition",
-    description: "AI classifies the issue using NLP and context",
-    icon: "🧠",
+    title: "AI Analysis",
+    description: "Our AI analyzes the issue and searches for solutions.",
+    longDescription: "Our advanced AI system analyzes your issue, searches through our knowledge base, and identifies the most relevant solutions based on similar past cases and best practices.",
+    icon: () => <FiSearch className="w-8 h-8" />,
+    stats: "5 sec average analysis",
+    color: "text-secondary-500",
   },
   {
     id: 3,
-    title: "Automated Resolution",
-    description: "AI provides solution or executes automated fix",
-    icon: "⚡",
-  },
-  {
-    id: 4,
-    title: "Escalation if Needed",
-    description: "Unresolved cases go to human agents with full context",
-    icon: "👩‍💻",
+    title: "Instant Resolution",
+    description: "Get immediate resolution or smart escalation to human agents.",
+    longDescription: "Receive instant resolution for common issues or get seamlessly escalated to human agents with full context when needed. Our system ensures no information is lost during handoff.",
+    icon: () => <FiCheckCircle className="w-8 h-8" />,
+    stats: "40% instant resolution rate",
+    color: "text-accent-500",
   },
 ];
 
+const StepCard = ({ step, isExpanded, onClick, index }) => {
+  return (
+    <motion.div
+      layout
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      onClick={onClick}
+      className={`glass-card p-8 rounded-xl cursor-pointer transition-all duration-300 ${
+        isExpanded ? "md:col-span-2" : ""
+      }`}
+    >
+      <motion.div layout className="flex items-start gap-6">
+        <motion.div
+          layout
+          className={`${step.color} p-4 rounded-lg bg-opacity-10`}
+        >
+          {step.icon()}
+        </motion.div>
+        
+        <div className="flex-1">
+          <motion.div layout className="flex items-center justify-between">
+            <motion.h3 layout className="text-xl font-bold text-gray-900 dark:text-white">
+              {step.title}
+            </motion.h3>
+            <motion.div
+              layout
+              className={`text-sm font-medium ${step.color}`}
+            >
+              {step.stats}
+            </motion.div>
+          </motion.div>
+          
+          <motion.p layout className="text-gray-600 dark:text-gray-300 mt-2">
+            {step.description}
+          </motion.p>
+          
+          <AnimatePresence>
+            {isExpanded && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3 }}
+                className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700"
+              >
+                <p className="text-gray-600 dark:text-gray-300">
+                  {step.longDescription}
+                </p>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="mt-4 text-primary-600 dark:text-primary-400 font-medium flex items-center gap-2"
+                >
+                  Learn more
+                  <FiChevronDown className="w-4 h-4" />
+                </motion.button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+};
+
 const Workflow = () => {
   const [ref, inView] = useInView({ threshold: 0.1, triggerOnce: true });
+  const [activeStep, setActiveStep] = useState(null);
 
   return (
-    <section id="workflow" className="py-20 bg-gray-50" ref={ref}>
+    <section id="workflow" className="py-20 bg-gradient-to-b from-gray-50 to-white dark:from-gray-800 dark:to-gray-900" ref={ref}>
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          className="text-center mb-16"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
             How ResolveMeQ Works
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Seamless integration with your existing IT workflow
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            A seamless, AI-powered workflow that transforms IT support
           </p>
-        </div>
+        </motion.div>
 
         <div className="relative">
-          {/* Timeline line */}
-          <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 bg-gray-200 transform -translate-x-1/2"></div>
-
           <div className="space-y-12 md:space-y-0">
             {steps.map((step, index) => (
-              <motion.div
+              <StepCard
                 key={step.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: index * 0.2 }}
-                className={`flex flex-col md:flex-row items-center ${
-                  index % 2 === 0 ? "md:text-right" : "md:text-left"
-                }`}
-              >
-                {index % 2 === 0 ? (
-                  <>
-                    <div className="md:w-1/2 md:pr-12 mb-8 md:mb-0">
-                      <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                        {step.title}
-                      </h3>
-                      <p className="text-gray-600">{step.description}</p>
-                    </div>
-                    <div className="md:w-1/2 md:pl-12 flex md:justify-start justify-center">
-                      <div className="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center text-2xl">
-                        {step.icon}
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="md:w-1/2 md:pr-12 flex md:justify-end justify-center order-2">
-                      <div className="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center text-2xl">
-                        {step.icon}
-                      </div>
-                    </div>
-                    <div className="md:w-1/2 md:pl-12 mb-8 md:mb-0 order-1">
-                      <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                        {step.title}
-                      </h3>
-                      <p className="text-gray-600">{step.description}</p>
-                    </div>
-                  </>
-                )}
-              </motion.div>
+                step={step}
+                isExpanded={activeStep === index}
+                onClick={() => setActiveStep(activeStep === index ? null : index)}
+                index={index}
+              />
             ))}
           </div>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.8 }}
+          className="mt-16 text-center"
+        >
+          <div className="inline-flex items-center gap-8 p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg">
+            <div className="flex items-center gap-2">
+              <FiClock className="w-5 h-5 text-primary-600" />
+              <span className="text-gray-600 dark:text-gray-300">Avg. Resolution Time: 15min</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <FiUsers className="w-5 h-5 text-primary-600" />
+              <span className="text-gray-600 dark:text-gray-300">10,000+ Users Supported</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <FiCheck className="w-5 h-5 text-primary-600" />
+              <span className="text-gray-600 dark:text-gray-300">98% Satisfaction Rate</span>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
