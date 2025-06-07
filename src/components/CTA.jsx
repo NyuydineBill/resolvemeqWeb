@@ -5,15 +5,13 @@ import { FiMail, FiPhone, FiCalendar, FiCheck, FiArrowRight } from "react-icons/
 
 const CTA = () => {
   const [email, setEmail] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Here you would typically handle the form submission
-    setIsSubmitted(true);
-    setShowSuccess(true);
-    setTimeout(() => setShowSuccess(false), 3000);
+    setIsLoading(true);
+    setTimeout(() => setIsLoading(false), 3000);
   };
 
   return (
@@ -71,7 +69,7 @@ const CTA = () => {
             <FadeInDiv delay={0.8}>
               <div className="glass-card p-8 rounded-xl backdrop-blur-sm bg-white/10 border border-white/20">
                 <AnimatePresence mode="wait">
-                  {!isSubmitted ? (
+                  {!isLoading ? (
                     <motion.form
                       key="form"
                       initial={{ opacity: 0 }}

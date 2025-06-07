@@ -8,7 +8,6 @@ import {
   FiShield,
   FiActivity,
   FiChevronDown,
-  FiChevronUp,
 } from "react-icons/fi";
 
 const features = [

@@ -1,22 +1,10 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { FadeInDiv } from "../animations/fadeIn";
-import { 
-  FiCheck, 
-  FiX, 
-  FiHelpCircle, 
-  FiArrowRight,
-  FiUsers,
-  FiMessageSquare,
-  FiZap,
-  FiShield,
-  FiStar
-} from "react-icons/fi";
+import { FiCheck, FiX, FiHelpCircle, FiArrowRight, FiUsers, FiMessageSquare, FiZap, FiShield, FiStar } from "react-icons/fi";
 
 const Pricing = () => {
   const [isAnnual, setIsAnnual] = useState(true);
-  const [selectedPlan, setSelectedPlan] = useState("pro");
-  const [showTooltip, setShowTooltip] = useState(null);
 
   const pricingPlans = [
     {
